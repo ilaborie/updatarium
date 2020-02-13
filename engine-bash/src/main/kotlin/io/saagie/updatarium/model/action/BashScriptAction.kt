@@ -17,11 +17,11 @@
  */
 package io.saagie.updatarium.model.action
 
-import com.autodsl.annotation.AutoDsl
+
 import io.saagie.updatarium.engine.bash.BashEngine
 import java.util.concurrent.TimeUnit
 
-@AutoDsl
+
 data class BashScriptAction(
     val script: String,
     val workingDir: String = ".",

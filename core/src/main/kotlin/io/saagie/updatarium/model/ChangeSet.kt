@@ -17,17 +17,15 @@
  */
 package io.saagie.updatarium.model
 
-import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.config.UpdatariumConfiguration
 import io.saagie.updatarium.model.Status.KO
 import io.saagie.updatarium.model.Status.OK
-import io.saagie.updatarium.model.UpdatariumError.ChangesetError
+import io.saagie.updatarium.model.UpdatariumError.ChangeSetError
 import io.saagie.updatarium.log.InMemoryAppenderAccess
 import io.saagie.updatarium.log.InMemoryAppenderManager
 import io.saagie.updatarium.model.action.Action
 import mu.KLoggable
 
-@AutoDsl
 data class ChangeSet(
     val id: String,
     val author: String,
@@ -62,8 +60,8 @@ data class ChangeSet(
      *      - unlock the changeset (with the correct status)
      *  Status => OK if all actions was OK, KO otherwise ...
      */
-    fun execute(configuration: UpdatariumConfiguration = UpdatariumConfiguration()): List<ChangesetError> {
-        val exceptions: MutableList<ChangesetError> = mutableListOf()
+    fun execute(configuration: UpdatariumConfiguration = UpdatariumConfiguration()): List<ChangeSetError> {
+        val exceptions: MutableList<ChangeSetError> = mutableListOf()
         val persistEngine = configuration.persistEngine
         if (!persistEngine.notAlreadyExecuted(calculateId())) {
             logger.info { "$id already executed" }
@@ -94,7 +92,7 @@ data class ChangeSet(
                         .getEvents(persistConfig = persistEngine.configuration, success = false)
                 )
                 logger.info { "$id marked as $KO" }
-                with(ChangesetError(this, e)) {
+                with(ChangeSetError(this, e)) {
                     exceptions.add(this)
                     if (configuration.failfast) {
                         return exceptions.toList()

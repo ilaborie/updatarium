@@ -23,6 +23,7 @@ import assertk.assertions.extracting
 import assertk.assertions.hasSize
 import io.saagie.updatarium.config.UpdatariumConfiguration
 import io.saagie.updatarium.model.UpdatariumError
+import io.saagie.updatarium.model.changeLog
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -48,20 +49,11 @@ class UpdatariumITest {
             Updatarium(this)
                 .executeChangelog(
                     """
-        import io.saagie.updatarium.dsl.action.BasicAction
-        import io.saagie.updatarium.dsl.changeSet
-        import io.saagie.updatarium.dsl.changelog
+        import io.saagie.updatarium.model.changeLog
 
-        changelog {
-            changesets {
-                +changeSet {
-                    id = "ChangeSet-1"
-                    author = "Hello World"
-                    actions {
-                        +BasicAction {logger.info {"Hello world"}
-                        }
-                    }
-                }
+        changeLog {
+            changeSet(id = "ChangeSet-1", author = "Hello World") {
+                action { logger.info {"Hello world"} }
             }
         }
     """.trimIndent()
@@ -80,24 +72,13 @@ class UpdatariumITest {
             Updatarium(this)
                 .executeChangelog(
                     """
-        import io.saagie.updatarium.dsl.action.BasicAction
-        import io.saagie.updatarium.dsl.changeSet
-        import io.saagie.updatarium.dsl.changelog
+        import io.saagie.updatarium.model.changeLog
 
-        changelog {
-            changesets {
-                +changeSet {
-                    id = "ChangeSet-1"
-                    author = "Hello World"
-                    actions {
-                        +BasicAction {logger.info {"0"}
-                        }
-                        +BasicAction {logger.info {"1"}
-                        }
-                        +BasicAction {logger.info {"2"}
-                        }
-                    }
-                }
+        changeLog {
+            changeSet(id = "ChangeSet-1", author = "Hello World") {
+                action { logger.info { "0" } }
+                action { logger.info { "1" } }
+                action { logger.info { "2" } }
             }
         }
     """.trimIndent()
@@ -116,30 +97,15 @@ class UpdatariumITest {
             Updatarium(this)
                 .executeChangelog(
                     """
-        import io.saagie.updatarium.dsl.action.BasicAction
-        import io.saagie.updatarium.dsl.changeSet
-        import io.saagie.updatarium.dsl.changelog
+        import io.saagie.updatarium.model.changeLog
 
-        changelog {
-            changesets {
-                +changeSet {
-                    id = "ChangeSet-1"
-                    author = "Hello 0"
-                    actions {
-                        +BasicAction { logger.info {"0"}
-                        }
-                    }
-                }
-                +changeSet {
-                    id = "ChangeSet-2"
-                    author = "Hello 1"
-                    actions {
-                        +BasicAction { logger.info {"1"}
-                        }
-                        +BasicAction { logger.info {"2"}
-                        }
-                    }
-                }
+        changeLog {
+            changeSet(id = "ChangeSet-1", author = "Hello 0") {    
+                action { logger.info {"0"} }
+            }
+            changeSet(id = "ChangeSet-2", author = "Hello 1") {
+                action { logger.info {"1"} }
+                action { logger.info {"2"} }
             }
         }
     """.trimIndent()
@@ -283,6 +249,31 @@ class UpdatariumITest {
             assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                 .extracting { it.first.id }
                 .containsExactly("ChangeSet-2")
+        }
+    }
+
+    @Test
+    fun `should correctly execute a changelog from DSL`() {
+        with(getConfig()) {
+            Updatarium(this)
+                .executeChangelog(
+                    changeLog(id = "plop") {
+                        changeSet(id = "ChangeSet-1", author = "Hello World") {
+                            action { logger.info { "0" } }
+                            action { logger.info { "1" } }
+                            action { logger.info { "2" } }
+                        }
+                        changeSet(id = "ChangeSet-2", author = "Toto") {
+                            action { logger.info { "0" } }
+                            action { logger.info { "1" } }
+                            action { logger.info { "2" } }
+                        }
+                    }
+                )
+            assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(2)
+            assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
+                .extracting { it.first.id }
+                .containsExactly("plop_ChangeSet-1", "plop_ChangeSet-2")
         }
     }
 

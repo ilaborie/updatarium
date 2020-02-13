@@ -17,16 +17,14 @@
  */
 package io.saagie.updatarium.model.action
 
-import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.engine.mongo.MongoEngine
 
 const val MONGODB_CONNECTIONSTRING = "MONGODB_CONNECTIONSTRING"
 
-@AutoDsl
 class MongoScriptAction(
     connectionStringEnvVar: String = MONGODB_CONNECTIONSTRING,
     val f: MongoScriptAction.() -> Unit
-) : Runnable() {
+) : Action() {
 
     val mongoEngine = MongoEngine(connectionStringEnvVar)
     val mongoClient = mongoEngine.mongoClient

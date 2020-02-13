@@ -15,21 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.saagie.updatarium.model.action.BasicAction
-import io.saagie.updatarium.model.changeSet
 import io.saagie.updatarium.model.changeLog
 
 changeLog {
-    changesets {
-        +changeSet {
-            id = "ChangeSet-2"
-            author = "HelloWorld"
-            tags = listOf("hello")
-            actions {
-                +BasicAction {
-                    logger.info { "Hello world 2" }
-                }
-            }
+    changeSet(id = "ChangeSet-2", author = "HelloWorld") {
+        tags = listOf("hello")
+        action {
+            logger.info { "Hello world 2" }
         }
     }
 }

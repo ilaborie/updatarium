@@ -15,40 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.saagie.updatarium.model.action.BasicAction
-import io.saagie.updatarium.model.changeSet
 import io.saagie.updatarium.model.changeLog
-import java.lang.IllegalStateException
 
 changeLog {
-    changesets {
-        +changeSet {
-            id = "ChangeSet-1"
-            author = "HelloWorld"
-            actions {
-                +BasicAction {
-                    logger.info { "Hello world1" }
-                }
-            }
+    changeSet(id = "ChangeSet-1", author = "HelloWorld") {
+        action { logger.info { "Hello world1" } }
+    }
+    changeSet(id = "ChangeSet-2", author = "HelloWorld") {
+        action {
+            throw IllegalStateException("Error in changeset")
+            logger.info { "Hello world2" }
         }
-        +changeSet {
-            id = "ChangeSet-2"
-            author = "HelloWorld"
-            actions {
-                +BasicAction {
-                    throw IllegalStateException("Error in changeset")
-                    logger.info { "Hello world2" }
-                }
-            }
-        }
-        +changeSet {
-            id = "ChangeSet-3"
-            author = "HelloWorld"
-            actions {
-                +BasicAction {
-                    logger.info { "Hello world3" }
-                }
-            }
-        }
+    }
+    changeSet(id = "ChangeSet-3", author = "HelloWorld") {
+        action { logger.info { "Hello world3" } }
     }
 }

@@ -37,16 +37,16 @@ class Updatarium(val configuration: UpdatariumConfiguration = UpdatariumConfigur
     private val logger = KotlinLogging.logger {}
     private val ktsLoader = KtsObjectLoader()
 
-    fun executeChangelog(reader: Reader, tags: List<String> = emptyList(), changelogId: String = "") {
-        executeScript(reader.readText(), changelogId, tags)
+    fun executeChangelog(reader: Reader, tags: List<String> = emptyList()) {
+        executeScript(reader.readText(), tags)
     }
 
-    fun executeChangelog(script: String, tags: List<String> = emptyList(), changelogId: String = "") {
-        executeScript(script, changelogId, tags)
+    fun executeChangelog(script: String, tags: List<String> = emptyList()) {
+        executeScript(script, tags)
     }
 
-    fun executeChangelog(reader: Reader, tag: String, changelogId: String = "") {
-        this.executeChangelog(reader, listOf(tag), changelogId)
+    fun executeChangelog(reader: Reader, tag: String) {
+        this.executeChangelog(reader, listOf(tag))
     }
 
     fun executeChangelog(path: Path, tags: List<String> = emptyList()) {
@@ -57,8 +57,8 @@ class Updatarium(val configuration: UpdatariumConfiguration = UpdatariumConfigur
         executeChangelog(Files.newBufferedReader(path), listOf(tag), path.toAbsolutePath().toString())
     }
 
-    fun executeChangelog(script: String, tag: String, changelogId: String = "") {
-        executeChangelog(script, listOf(tag), changelogId)
+    fun executeChangelog(script: String, tag: String) {
+        executeChangelog(script, listOf(tag))
     }
 
     fun executeChangelogs(path: Path, pattern: String, tag: String) {
@@ -101,15 +101,16 @@ class Updatarium(val configuration: UpdatariumConfiguration = UpdatariumConfigur
         }
     }
 
-    private fun executeScript(
-        script: String,
-        changelogId: String,
-        tags: List<String>
-    ) {
-        with(ktsLoader.load<Changelog>(script)) {
-            this.setId(changelogId)
-            executeChangelog(this, tags)
+    private fun executeChangelog(reader: Reader, tags: List<String>, id: String) {
+        val changeLog = ktsLoader.load<Changelog>(reader).let { loaded ->
+            if (loaded.id.isEmpty()) loaded.copy(id = id) else loaded
         }
+        executeChangelog(changeLog, tags)
+    }
+
+    private fun executeScript(script: String, tags: List<String>) {
+        val changeLog = ktsLoader.load<Changelog>(script)
+        executeChangelog(changeLog, tags)
     }
 }
 

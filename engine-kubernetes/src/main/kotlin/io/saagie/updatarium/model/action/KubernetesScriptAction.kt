@@ -17,10 +17,8 @@
  */
 package io.saagie.updatarium.model.action
 
-import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.engine.kubernetes.KubernetesEngine
 
-@AutoDsl
 class KubernetesScriptAction(
     val namespace: String? = null,
     val f: KubernetesScriptAction.() -> Unit

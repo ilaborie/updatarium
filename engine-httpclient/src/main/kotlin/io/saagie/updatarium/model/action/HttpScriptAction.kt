@@ -17,10 +17,8 @@
  */
 package io.saagie.updatarium.model.action
 
-import com.autodsl.annotation.AutoDsl
 import com.github.kittinunf.fuel.core.FuelManager
 
-@AutoDsl
 class HttpScriptAction(val f: HttpScriptAction.() -> Unit) : Action() {
 
     val restClient = FuelManager.instance

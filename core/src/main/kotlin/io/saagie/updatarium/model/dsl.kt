@@ -17,9 +17,7 @@
  */
 package io.saagie.updatarium.model
 
-import io.saagie.updatarium.Updatarium
 import io.saagie.updatarium.model.action.Action
-import io.saagie.updatarium.model.action.BasicAction
 import mu.KotlinLogging
 
 typealias Tag = String
@@ -30,7 +28,8 @@ class ChangeLogDsl(val id: String) {
     fun changeSet(id: String, author: String, block: ChangeSetDsl.() -> Unit) =
         this.changeSetsDsl.add(ChangeSetDsl(id, author).apply(block))
 
-    fun build(): Changelog = Changelog(this.changeSetsDsl.map { it.build(id) })
+    internal fun build(): Changelog =
+        Changelog(id, this.changeSetsDsl.map { it.build(id) })
 }
 
 class ChangeSetDsl(val id: String, val author: String) {
@@ -41,39 +40,26 @@ class ChangeSetDsl(val id: String, val author: String) {
     fun action(name: String = "basicAction", block: ActionDsl.() -> Unit) =
         this.actions.add(ActionDsl(name, block))
 
-    fun build(changelogId: String): ChangeSet = ChangeSet(
-        id = if (changelogId.isEmpty()) id else "${changelogId}_$id",
-        author = author,
-        tags = tags,
-        actions = actions.map(ActionDsl::build)
-    )
+    internal fun build(changelogId: String): ChangeSet =
+        ChangeSet(
+            id = if (changelogId.isEmpty()) id else "${changelogId}_$id",
+            author = author,
+            tags = tags,
+            actions = actions.map(ActionDsl::build)
+        )
 }
 
 class ActionDsl(val name: String, val block: ActionDsl.() -> Unit) {
     val logger = KotlinLogging.logger(name)
 
-    fun build(): Action = object : Action() {
+    internal fun build(): Action = object : Action() {
         override fun execute() {
             block()
         }
-
     }
 }
 
-fun changeLog(id: String = "", block: ChangeLogDsl.() -> Unit): Changelog = ChangeLogDsl(id).apply(block).build()
-
-
-fun main() {
-
-    Updatarium().executeChangelog(
-        changeLog(id = "123") {
-            changeSet(id = "ChangeSet-1", author = "Hello World") {
-                tags = listOf("before")
-                action {
-                    (1..5).forEach {
-                        logger.info { "Hello ${"$"}it!" }
-                    }
-                }
-            }
-        })
-}
+fun changeLog(id: String = "", block: ChangeLogDsl.() -> Unit): Changelog =
+    ChangeLogDsl(id)
+        .apply(block)
+        .build()

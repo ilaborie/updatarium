@@ -18,6 +18,6 @@
 package io.saagie.updatarium.model
 
 sealed class UpdatariumError(open val e: Throwable?) : Exception() {
-    data class ChangesetError(val changeSet: ChangeSet, override val e: Throwable? = null) : UpdatariumError(e)
+    data class ChangeSetError(val changeSet: ChangeSet, override val e: Throwable? = null) : UpdatariumError(e)
     object ExitError : UpdatariumError(null)
 }
