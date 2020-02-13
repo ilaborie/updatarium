@@ -18,6 +18,7 @@
 package io.saagie.updatarium.model.action
 
 import io.saagie.updatarium.engine.kubernetes.KubernetesEngine
+import io.saagie.updatarium.model.Action
 
 class KubernetesScriptAction(
     val namespace: String? = null,

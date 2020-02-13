@@ -23,7 +23,6 @@ import io.saagie.updatarium.model.Status.OK
 import io.saagie.updatarium.model.UpdatariumError.ChangeSetError
 import io.saagie.updatarium.log.InMemoryAppenderAccess
 import io.saagie.updatarium.log.InMemoryAppenderManager
-import io.saagie.updatarium.model.action.Action
 import mu.KLoggable
 
 data class ChangeSet(
@@ -33,23 +32,6 @@ data class ChangeSet(
     val actions: List<Action> = emptyList()
 ) : KLoggable {
     override val logger = logger()
-
-    private var changelogId = ""
-
-    /**
-     * Set the changelogId is not empty
-     */
-    fun setChangelogId(id: String): ChangeSet {
-        if (id.isNotEmpty()) {
-            this.changelogId = "${id}_"
-        }
-        return this
-    }
-
-    /**
-     * Generate an ID (changelogId id)
-     */
-    fun calculateId() = "$changelogId$id"
 
     /**
      * The changeset execution :
@@ -63,7 +45,7 @@ data class ChangeSet(
     fun execute(configuration: UpdatariumConfiguration = UpdatariumConfiguration()): List<ChangeSetError> {
         val exceptions: MutableList<ChangeSetError> = mutableListOf()
         val persistEngine = configuration.persistEngine
-        if (!persistEngine.notAlreadyExecuted(calculateId())) {
+        if (!persistEngine.notAlreadyExecuted(id)) {
             logger.info { "$id already executed" }
         } else {
             logger.info { "$id will be executed" }
@@ -103,7 +85,7 @@ data class ChangeSet(
         return exceptions.toList()
     }
 
-    private fun ChangeSet.sendUnlockToPersistEngine(
+    private fun sendUnlockToPersistEngine(
         configuration: UpdatariumConfiguration,
         status: Status,
         events: List<String>

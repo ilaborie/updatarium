@@ -19,6 +19,7 @@ package io.saagie.updatarium.model.action
 
 
 import io.saagie.updatarium.engine.bash.BashEngine
+import io.saagie.updatarium.model.Action
 import java.util.concurrent.TimeUnit
 
 

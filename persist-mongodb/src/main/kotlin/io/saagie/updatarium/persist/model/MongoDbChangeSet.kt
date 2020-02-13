@@ -21,8 +21,8 @@ import io.saagie.updatarium.model.ChangeSet
 import io.saagie.updatarium.model.Status
 import java.time.Instant
 
-data class MongoDbChangeset(
-    val changesetId: String,
+data class MongoDbChangeSet(
+    val changeSetId: String,
     val author: String,
     val status: String,
     val lockDate: Instant = Instant.now(),
@@ -30,8 +30,8 @@ data class MongoDbChangeset(
     val log: List<String>
 )
 
-fun ChangeSet.toMongoDbDocument() = MongoDbChangeset(
-    changesetId = this.calculateId(),
+fun ChangeSet.toMongoDbDocument(): MongoDbChangeSet = MongoDbChangeSet(
+    changeSetId = this.id,
     author = this.author,
     status = Status.EXECUTE.name,
     log = mutableListOf()

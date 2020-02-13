@@ -17,7 +17,6 @@
  */
 package io.saagie.updatarium.model
 
-import io.saagie.updatarium.model.action.Action
 import mu.KotlinLogging
 
 typealias Tag = String
@@ -52,10 +51,8 @@ class ChangeSetDsl(val id: String, val author: String) {
 class ActionDsl(val name: String, val block: ActionDsl.() -> Unit) {
     val logger = KotlinLogging.logger(name)
 
-    internal fun build(): Action = object : Action() {
-        override fun execute() {
-            block()
-        }
+    internal fun build(): Action = Action {
+        block()
     }
 }
 

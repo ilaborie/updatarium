@@ -18,6 +18,7 @@
 package io.saagie.updatarium.model.action
 
 import com.github.kittinunf.fuel.core.FuelManager
+import io.saagie.updatarium.model.Action
 
 class HttpScriptAction(val f: HttpScriptAction.() -> Unit) : Action() {
 

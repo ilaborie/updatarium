@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.saagie.updatarium.model.action.BasicAction
 import io.saagie.updatarium.model.changeSet
 import io.saagie.updatarium.model.changeLog
 

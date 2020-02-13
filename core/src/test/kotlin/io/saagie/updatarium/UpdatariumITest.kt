@@ -128,8 +128,8 @@ class UpdatariumITest {
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(2)
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                 .containsExactly(
-                    "${changelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                    "${changelogWithTagPath.toAbsolutePath().toString()}_ChangeSet-2"
+                    "${changelogPath.toAbsolutePath()}_ChangeSet-1",
+                    "${changelogWithTagPath.toAbsolutePath()}_ChangeSet-2"
                 )
             assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                 .extracting { it.first.id }
@@ -150,7 +150,7 @@ class UpdatariumITest {
                 )
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(1)
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested).containsExactly(
-                "${changelogWithTagPath.toAbsolutePath().toString()}_ChangeSet-2"
+                "${changelogWithTagPath.toAbsolutePath()}_ChangeSet-2"
             )
             assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                 .extracting { it.first.id }
@@ -226,8 +226,8 @@ class UpdatariumITest {
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(2)
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                 .containsExactly(
-                    "${changelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                    "${changelogWithTagPath.toAbsolutePath().toString()}_ChangeSet-2"
+                    "${changelogPath.toAbsolutePath()}_ChangeSet-1",
+                    "${changelogWithTagPath.toAbsolutePath()}_ChangeSet-2"
                 )
             assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                 .extracting { it.first.id }
@@ -244,7 +244,7 @@ class UpdatariumITest {
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(1)
             assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                 .containsExactly(
-                    "${changelogWithTagPath.toAbsolutePath().toString()}_ChangeSet-2"
+                    "${changelogWithTagPath.toAbsolutePath()}_ChangeSet-2"
                 )
             assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                 .extracting { it.first.id }
@@ -292,8 +292,8 @@ class UpdatariumITest {
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(2)
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                         .containsExactly(
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-2"
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-1",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-2"
                         )
                     assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                         .extracting { "${it.first.id}-${it.second.name}" }
@@ -314,9 +314,9 @@ class UpdatariumITest {
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(3)
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                         .containsExactly(
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-2",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-3"
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-1",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-2",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-3"
                         )
                     assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                         .extracting { "${it.first.id}-${it.second.name}" }
@@ -334,8 +334,8 @@ class UpdatariumITest {
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(2)
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                         .containsExactly(
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-2"
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-1",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-2"
                         )
                     assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                         .extracting { "${it.first.id}-${it.second.name}" }
@@ -353,9 +353,9 @@ class UpdatariumITest {
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested).hasSize(3)
                     assertThat((this.persistEngine as TestPersistEngine).changeSetTested)
                         .containsExactly(
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-1",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-2",
-                            "${failedChangelogPath.toAbsolutePath().toString()}_ChangeSet-3"
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-1",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-2",
+                            "${failedChangelogPath.toAbsolutePath()}_ChangeSet-3"
                         )
                     assertThat((this.persistEngine as TestPersistEngine).changeSetUnLocked)
                         .extracting { "${it.first.id}-${it.second.name}" }

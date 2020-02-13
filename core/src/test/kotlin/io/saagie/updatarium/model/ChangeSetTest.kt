@@ -23,7 +23,6 @@ import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.model.action.BasicAction
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.Test
 
@@ -36,10 +35,10 @@ class ChangeSetTest {
             id = "changeset1",
             author = "test",
             actions = listOf(
-                BasicAction { actionRecord.add("action1") },
-                BasicAction { actionRecord.add("action2") },
-                BasicAction { actionRecord.add("action3") },
-                BasicAction { actionRecord.add("action4") }
+                Action { actionRecord.add("action1") },
+                Action { actionRecord.add("action2") },
+                Action { actionRecord.add("action3") },
+                Action { actionRecord.add("action4") }
             )
         )
         val config = UpdatariumConfiguration(persistEngine = TestPersistEngine())
@@ -60,13 +59,13 @@ class ChangeSetTest {
             id = "changeset1",
             author = "test",
             actions = listOf(
-                BasicAction { actionRecord.add("action1") },
-                BasicAction { actionRecord.add("action2") },
-                BasicAction { throw IllegalStateException() },
-                BasicAction { actionRecord.add("action4") }
+                Action { actionRecord.add("action1") },
+                Action { actionRecord.add("action2") },
+                Action { throw IllegalStateException() },
+                Action { actionRecord.add("action4") }
             )
         )
-        val config = UpdatariumConfiguration(failfast = false,persistEngine = TestPersistEngine())
+        val config = UpdatariumConfiguration(failfast = false, persistEngine = TestPersistEngine())
         changeset.execute(config)
 
         assertThat(actionRecord)
@@ -75,37 +74,7 @@ class ChangeSetTest {
             .containsExactly("action1", "action2")
         assertThat((config.persistEngine as TestPersistEngine).changeSetUnLocked.filter { it.first == changeset }
             .first().second).isEqualTo(Status.KO)
-
     }
-
-    @Test
-    fun should_set_an_id_if_changelogId_is_not_empty() {
-        val changeset = ChangeSet(
-            id = "changeset1",
-            author = "test",
-            actions = listOf(
-                BasicAction { Unit }
-            )
-        )
-        assertThat(changeset.calculateId()).isEqualTo(changeset.id)
-        changeset.setChangelogId("newId")
-        assertThat(changeset.calculateId()).isEqualTo("newId_${changeset.id}")
-    }
-
-    @Test
-    fun should_do_nothing_if_changelogId_is_empty() {
-        val changeset = ChangeSet(
-            id = "changeset1",
-            author = "test",
-            actions = listOf(
-                BasicAction { Unit }
-            )
-        )
-        assertThat(changeset.calculateId()).isEqualTo(changeset.id)
-        changeset.setChangelogId("")
-        assertThat(changeset.calculateId()).isEqualTo(changeset.id)
-    }
-
 
     @Test
     fun should_run_nothing_when_dryrun_is_activated() {
@@ -114,10 +83,10 @@ class ChangeSetTest {
             id = "changeset1",
             author = "test",
             actions = listOf(
-                BasicAction { actionRecord.add("action1") },
-                BasicAction { actionRecord.add("action2") },
-                BasicAction { actionRecord.add("action3") },
-                BasicAction { actionRecord.add("action4") }
+                Action { actionRecord.add("action1") },
+                Action { actionRecord.add("action2") },
+                Action { actionRecord.add("action3") },
+                Action { actionRecord.add("action4") }
             )
         )
         val config = UpdatariumConfiguration(dryRun = true, persistEngine = TestPersistEngine())

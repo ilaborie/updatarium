@@ -37,7 +37,7 @@ data class Changelog(val id: String = "", val changeSets: List<ChangeSet> = empt
         configuration.persistEngine.checkConnection()
         InMemoryAppenderManager.setup(persistConfig = configuration.persistEngine.configuration)
         matchedChangeSets(tags).forEach {
-            exceptions.addAll(it.setChangelogId(id).execute(configuration))
+            exceptions.addAll(it.execute(configuration))
             if (configuration.failfast && exceptions.isNotEmpty()) {
                 return ChangeLogReport(exceptions)
             }

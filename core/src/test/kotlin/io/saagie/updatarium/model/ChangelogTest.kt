@@ -24,14 +24,13 @@ import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.model.action.BasicAction
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class ChangelogTest {
 
-    val noop = BasicAction {}
+    val noop = Action {}
 
     @Nested
     inner class ExecuteTest {
@@ -72,7 +71,7 @@ class ChangelogTest {
                         author = "test",
                         actions = listOf(
                             noop,
-                            BasicAction { throw IllegalStateException("Fail in action") }
+                            Action { throw IllegalStateException("Fail in action") }
                         )
                     ),
                     ChangeSet(
@@ -113,7 +112,7 @@ class ChangelogTest {
                     author = "test",
                     actions = listOf(
                         noop,
-                        BasicAction { throw IllegalStateException("Fail in action") }
+                        Action { throw IllegalStateException("Fail in action") }
                     )
                 ),
                 ChangeSet(
