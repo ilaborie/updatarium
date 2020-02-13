@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model
 
 import assertk.assertThat
 import assertk.assertions.*
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.action.BasicAction
+import io.saagie.updatarium.model.action.BasicAction
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -35,7 +35,7 @@ class ChangelogTest {
         @Test
         fun should_execute_all_changesets_if_no_error() {
             val changelog = Changelog().apply {
-                changesets = listOf(
+                changeSets = listOf(
                     ChangeSet(
                         id = "changeset1", author = "test", actions = listOf(
                             BasicAction { },
@@ -72,7 +72,7 @@ class ChangelogTest {
         @Test
         fun should_stop_when_an_action_throws_an_exception() {
             val changelog = Changelog().apply {
-                changesets = listOf(
+                changeSets = listOf(
                     ChangeSet(
                         id = "changeset1", author = "test", actions = listOf(
                             BasicAction { },
@@ -111,7 +111,7 @@ class ChangelogTest {
     @Test
     fun should_stop_when_an_action_throws_an_exceptionand_failfast() {
         val changelog = Changelog().apply {
-            changesets = listOf(
+            changeSets = listOf(
                 ChangeSet(
                     id = "changeset1", author = "test", actions = listOf(
                         BasicAction { },
@@ -128,9 +128,9 @@ class ChangelogTest {
 
         val config = UpdatariumConfiguration(failfast = true, persistEngine = TestPersistEngine())
         val changelogReport = changelog.execute(config)
-        assertThat(changelogReport.changeSetException).hasSize(1)
-        with(changelogReport.changeSetException.first()) {
-            assertThat(this.changeSet).isEqualTo(changelog.changesets.first())
+        assertThat(changelogReport.changeSetExceptions).hasSize(1)
+        with(changelogReport.changeSetExceptions.first()) {
+            assertThat(this.changeSet).isEqualTo(changelog.changeSets.first())
             assertThat(this.e!!).hasMessage("Fail in action")
             assertThat((config.persistEngine as TestPersistEngine).changeSetTested).containsExactly(
                 "changeset1"
@@ -222,7 +222,7 @@ class ChangelogTest {
     }
 
     fun changelogWithtags(tags: Pair<List<String>?, List<String>?>) = Changelog().apply {
-        changesets = listOf(
+        changeSets = listOf(
             ChangeSet(
                 id = "changeset1", author = "test", tags = tags.first, actions = listOf(
                     BasicAction { },

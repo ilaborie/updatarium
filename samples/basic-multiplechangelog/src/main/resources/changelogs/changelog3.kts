@@ -15,11 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.saagie.updatarium.dsl.action.BasicAction
-import io.saagie.updatarium.dsl.changeSet
-import io.saagie.updatarium.dsl.changelog
+import io.saagie.updatarium.model.action.BasicAction
+import io.saagie.updatarium.model.changeSet
+import io.saagie.updatarium.model.changeLog
 
-changelog {
+changeLog {
     changesets {
         +changeSet {
             id = "ChangeSet-bash-3"

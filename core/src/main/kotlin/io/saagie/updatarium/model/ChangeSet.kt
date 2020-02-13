@@ -15,24 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model
 
 import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.Status.KO
-import io.saagie.updatarium.dsl.Status.OK
-import io.saagie.updatarium.dsl.UpdatariumError.ChangesetError
-import io.saagie.updatarium.dsl.action.Action
+import io.saagie.updatarium.model.Status.KO
+import io.saagie.updatarium.model.Status.OK
+import io.saagie.updatarium.model.UpdatariumError.ChangesetError
 import io.saagie.updatarium.log.InMemoryAppenderAccess
 import io.saagie.updatarium.log.InMemoryAppenderManager
+import io.saagie.updatarium.model.action.Action
 import mu.KLoggable
 
 @AutoDsl
 data class ChangeSet(
     val id: String,
     val author: String,
-    val tags: List<String>? = mutableListOf(),
-    val actions: List<Action> = mutableListOf()
+    val tags: List<String> = emptyList(),
+    val actions: List<Action> = emptyList()
 ) : KLoggable {
     override val logger = logger()
 

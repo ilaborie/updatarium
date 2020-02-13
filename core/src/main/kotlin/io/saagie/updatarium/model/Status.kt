@@ -15,20 +15,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl.action
-
-import com.autodsl.annotation.AutoDsl
-
+package io.saagie.updatarium.model
 
 /**
- * Here is a simple implementation for Action.
- *
- * It will simply execute the function in parameter.
+ * Represent the status of the changeset.
  */
-@AutoDsl
-class BasicAction(val f: BasicAction.() -> Unit) : Action() {
-
-    override fun execute() {
-        f(this)
-    }
+enum class Status {
+    // execution in progress
+    EXECUTE,
+    // Execution is done with a correct status
+    OK,
+    // Execution is done but it has failed
+    KO
 }

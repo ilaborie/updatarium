@@ -15,22 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl.action
+package io.saagie.updatarium.model.action
 
-import mu.KLoggable
 
 /**
- * This class represent an Action. All custom actions should use the abstract class.
+ * Here is a simple implementation for Action.
  *
- * Only one function is available : `execute`, this function is called by the core io.saagie.updatarium.engine for a not already execute changeset.
+ * It will simply execute the function in parameter.
  */
-abstract class Action : KLoggable {
-    override val logger = logger()
+class BasicAction(val f: BasicAction.() -> Unit) : Action() {
 
-    /**
-     * The execute function.
-     *
-     * It will return an exception is something wrong happen.
-     */
-    abstract fun execute()
+    override fun execute() {
+        f(this)
+    }
 }

@@ -17,8 +17,8 @@
  */
 package io.saagie.updatarium.persist.model
 
-import io.saagie.updatarium.dsl.ChangeSet
-import io.saagie.updatarium.dsl.Status
+import io.saagie.updatarium.model.ChangeSet
+import io.saagie.updatarium.model.Status
 import java.time.Instant
 
 data class MongoDbChangeset(

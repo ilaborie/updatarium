@@ -15,16 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model.action
+
+import mu.KLoggable
 
 /**
- * Represent the status of the changeset.
+ * This class represent an Action. All custom actions should use the abstract class.
+ *
+ * Only one function is available : `execute`, this function is called by the core io.saagie.updatarium.engine for a not already execute changeset.
  */
-enum class Status {
-    // execution in progress
-    EXECUTE,
-    // Execution is done with a correct status
-    OK,
-    // Execution is done but it has failed
-    KO
+abstract class Action : KLoggable {
+    override val logger = logger()
+
+    /**
+     * The execute function.
+     *
+     * It will return an exception is something wrong happen.
+     */
+    abstract fun execute()
 }

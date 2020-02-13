@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model
 
 sealed class UpdatariumError(open val e: Throwable?) : Exception() {
     data class ChangesetError(val changeSet: ChangeSet, override val e: Throwable? = null) : UpdatariumError(e)

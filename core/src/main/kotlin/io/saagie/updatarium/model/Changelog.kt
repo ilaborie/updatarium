@@ -15,16 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model
 
-import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.UpdatariumError.ChangesetError
+import io.saagie.updatarium.model.UpdatariumError.ChangesetError
 import io.saagie.updatarium.log.InMemoryAppenderManager
 import mu.KLoggable
 
-@AutoDsl
-data class Changelog(var changesets: List<ChangeSet> = mutableListOf()) : KLoggable {
+data class Changelog(val changeSets: List<ChangeSet> = mutableListOf()) : KLoggable {
     override val logger = logger()
 
     private var id = ""
@@ -63,10 +61,10 @@ data class Changelog(var changesets: List<ChangeSet> = mutableListOf()) : KLogga
      * return only the matched changesets (at least one tag matched)
      */
     fun matchedChangesets(targetTags: List<String> = emptyList()) =
-        this.changesets
+        this.changeSets
             .filter { targetTags.isEmpty() || targetTags.intersect(it.tags ?: emptyList()).isNotEmpty() }
 }
 
 data class ChangelogReport(
-    val changeSetException: List<ChangesetError>
+    val changeSetExceptions: List<ChangesetError>
 )

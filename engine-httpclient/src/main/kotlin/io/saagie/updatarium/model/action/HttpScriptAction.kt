@@ -15,21 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl.action
+package io.saagie.updatarium.model.action
 
 import com.autodsl.annotation.AutoDsl
-import io.saagie.updatarium.engine.kubernetes.KubernetesEngine
+import com.github.kittinunf.fuel.core.FuelManager
 
 @AutoDsl
-class KubernetesScriptAction(
-    val namespace: String? = null,
-    val f: KubernetesScriptAction.() -> Unit
-) : Action() {
+class HttpScriptAction(val f: HttpScriptAction.() -> Unit) : Action() {
 
-    val client = when {
-        namespace != null -> KubernetesEngine.getClient(namespace)
-        else -> KubernetesEngine.getClient()
-    }
+    val restClient = FuelManager.instance
 
     override fun execute() {
         f(this)

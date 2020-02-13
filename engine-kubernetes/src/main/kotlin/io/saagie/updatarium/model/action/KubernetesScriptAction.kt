@@ -15,22 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl.action
+package io.saagie.updatarium.model.action
 
 import com.autodsl.annotation.AutoDsl
-import io.saagie.updatarium.engine.bash.BashEngine
-import java.util.concurrent.TimeUnit
+import io.saagie.updatarium.engine.kubernetes.KubernetesEngine
 
 @AutoDsl
-data class BashScriptAction(
-    val script: String,
-    val workingDir: String = ".",
-    val timeoutAmount: Long = 60,
-    val timeoutUnit: TimeUnit = TimeUnit.SECONDS
+class KubernetesScriptAction(
+    val namespace: String? = null,
+    val f: KubernetesScriptAction.() -> Unit
 ) : Action() {
-    val bashEngine = BashEngine()
+
+    val client = when {
+        namespace != null -> KubernetesEngine.getClient(namespace)
+        else -> KubernetesEngine.getClient()
+    }
 
     override fun execute() {
-        bashEngine.runCommand(this)
+        f(this)
     }
 }

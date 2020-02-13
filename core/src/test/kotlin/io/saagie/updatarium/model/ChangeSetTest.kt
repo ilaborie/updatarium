@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl
+package io.saagie.updatarium.model
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
@@ -23,7 +23,7 @@ import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.action.BasicAction
+import io.saagie.updatarium.model.action.BasicAction
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.Test
 

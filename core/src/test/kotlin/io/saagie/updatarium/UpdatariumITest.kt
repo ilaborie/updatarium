@@ -22,7 +22,7 @@ import assertk.assertions.containsExactly
 import assertk.assertions.extracting
 import assertk.assertions.hasSize
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.UpdatariumError
+import io.saagie.updatarium.model.UpdatariumError
 import io.saagie.updatarium.persist.TestPersistEngine
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

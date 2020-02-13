@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import io.saagie.updatarium.dsl.action.MongoScriptAction
-import io.saagie.updatarium.dsl.changeSet
-import io.saagie.updatarium.dsl.changelog
+import io.saagie.updatarium.model.action.MongoScriptAction
+import io.saagie.updatarium.model.changeSet
+import io.saagie.updatarium.model.changeLog
 import org.litote.kmongo.*
 
-changelog {
+changeLog {
     changesets {
         +changeSet {
             id = "ChangeSet-Mongodb-1"

@@ -18,8 +18,8 @@
 package io.saagie.updatarium.persist
 
 import com.mongodb.ConnectionString
-import io.saagie.updatarium.dsl.ChangeSet
-import io.saagie.updatarium.dsl.Status
+import io.saagie.updatarium.model.ChangeSet
+import io.saagie.updatarium.model.Status
 import io.saagie.updatarium.persist.model.MongoDbChangeset
 import io.saagie.updatarium.persist.model.toMongoDbDocument
 import org.litote.kmongo.*

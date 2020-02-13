@@ -19,9 +19,8 @@ package io.saagie.updatarium
  */
 import de.swirtz.ktsrunner.objectloader.KtsObjectLoader
 import io.saagie.updatarium.config.UpdatariumConfiguration
-import io.saagie.updatarium.dsl.Changelog
-import io.saagie.updatarium.dsl.ChangelogReport
-import io.saagie.updatarium.dsl.UpdatariumError
+import io.saagie.updatarium.model.Changelog
+import io.saagie.updatarium.model.UpdatariumError
 import mu.KotlinLogging
 import java.io.Reader
 import java.nio.file.Files
@@ -94,19 +93,22 @@ class Updatarium(val configuration: UpdatariumConfiguration = UpdatariumConfigur
         }
     }
 
-    private fun Updatarium.executeScript(
+    fun executeChangelog(changelog: Changelog, tags: List<String> = emptyList()) {
+        val result = changelog.execute(configuration, tags)
+        result.changeSetExceptions.forEach { logger.error { it } }
+        if (result.changeSetExceptions.isNotEmpty()) {
+            throw UpdatariumError.ExitError
+        }
+    }
+
+    private fun executeScript(
         script: String,
         changelogId: String,
         tags: List<String>
     ) {
         with(ktsLoader.load<Changelog>(script)) {
             this.setId(changelogId)
-            with (this.execute(configuration, tags).changeSetException){
-                if (this.isNotEmpty()){
-                    this.forEach { logger.error { it } }
-                    throw UpdatariumError.ExitError
-                }
-            }
+            executeChangelog(this, tags)
         }
     }
 }

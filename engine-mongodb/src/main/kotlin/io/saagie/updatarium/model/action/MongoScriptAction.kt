@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.saagie.updatarium.dsl.action
+package io.saagie.updatarium.model.action
 
 import com.autodsl.annotation.AutoDsl
 import io.saagie.updatarium.engine.mongo.MongoEngine
@@ -26,7 +26,7 @@ const val MONGODB_CONNECTIONSTRING = "MONGODB_CONNECTIONSTRING"
 class MongoScriptAction(
     connectionStringEnvVar: String = MONGODB_CONNECTIONSTRING,
     val f: MongoScriptAction.() -> Unit
-) : Action() {
+) : Runnable() {
 
     val mongoEngine = MongoEngine(connectionStringEnvVar)
     val mongoClient = mongoEngine.mongoClient

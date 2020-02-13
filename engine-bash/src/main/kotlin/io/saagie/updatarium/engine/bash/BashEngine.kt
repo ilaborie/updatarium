@@ -17,7 +17,7 @@
  */
 package io.saagie.updatarium.engine.bash
 
-import io.saagie.updatarium.dsl.action.BashScriptAction
+import io.saagie.updatarium.model.action.BashScriptAction
 import java.io.File
 
 class BashEngine {

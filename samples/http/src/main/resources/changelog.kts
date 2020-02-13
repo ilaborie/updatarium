@@ -17,12 +17,12 @@
  */
 import com.github.kittinunf.result.Result.Failure
 import com.github.kittinunf.result.Result.Success
-import io.saagie.updatarium.dsl.action.HttpScriptAction
-import io.saagie.updatarium.dsl.changeSet
-import io.saagie.updatarium.dsl.changelog
+import io.saagie.updatarium.model.action.HttpScriptAction
+import io.saagie.updatarium.model.changeSet
+import io.saagie.updatarium.model.changeLog
 import me.lazmaid.kraph.Kraph
 
-changelog {
+changeLog {
     changesets {
         +changeSet {
             id = "ChangeSet-Http-1"
